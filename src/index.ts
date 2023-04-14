@@ -20,7 +20,7 @@ if (!existsSync(workDir)) {
 }
 
 bot.start((ctx) => {
-  ctx.reply("Welcome to my Telegram bot!");
+  ctx.reply("Ciao amic* pelos*!");
 });
 
 bot.help((ctx) => {
@@ -63,19 +63,19 @@ bot.on("voice", async (ctx) => {
 
   await ctx.reply(response);
 
-  try {
-    const responseTranscriptionPath = await textToSpeech(response);
-    await ctx.sendChatAction("typing");
-    await ctx.replyWithVoice({
-      source: createReadStream(responseTranscriptionPath),
-      filename: localFilePath,
-    });
-  } catch (error) {
-    console.log(error);
-    await ctx.reply(
-      "Whoops! There was an error while synthesizing the response via play.ht. See logs for details."
-    );
-  }
+  // try {
+  //   const responseTranscriptionPath = await textToSpeech(response);
+  //   await ctx.sendChatAction("typing");
+  //   await ctx.replyWithVoice({
+  //     source: createReadStream(responseTranscriptionPath),
+  //     filename: localFilePath,
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  //   await ctx.reply(
+  //     "Whoops! There was an error while synthesizing the response via play.ht. See logs for details."
+  //   );
+  // }
 });
 
 bot.on("message", async (ctx) => {
