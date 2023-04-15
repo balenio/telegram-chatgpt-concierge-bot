@@ -1,6 +1,6 @@
 import { AgentExecutor, Tool, initializeAgentExecutor } from "langchain/agents";
 import { ChatOpenAI } from "langchain/chat_models";
-import { BufferMemory } from "langchain/memory";
+import { BufferWindowMemory } from "langchain/memory";
 import { Configuration } from "openai";
 import { OpenAIApi } from "openai";
 import { googleTool } from "./tools/google";
@@ -15,6 +15,7 @@ const params = {
   maxConcurrency: 1,
   maxTokens: 1000,
   maxRetries: 5,
+  memoryWindowSize: parseInt(process.env.MEMORY_WINDOW_SIZE ?? "7", 10),
 };
 
 export class Model {
@@ -41,10 +42,11 @@ export class Model {
         "chat-conversational-react-description",
         true
       );
-      this.executor.memory = new BufferMemory({
+      this.executor.memory = new BufferWindowMemory({
         returnMessages: true,
         memoryKey: "chat_history",
         inputKey: "input",
+        k: params.memoryWindowSize,
       });
     }
 
